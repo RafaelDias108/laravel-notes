@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\User;
 use App\Services\Operations;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 
 class MainController extends Controller
 {
@@ -129,8 +127,14 @@ class MainController extends Controller
         // $note->delete();
 
         // soft delete
-        $note->deleted_at = date('Y-m-d H:i:s');
-        $note->save();
+        // $note->deleted_at = date('Y-m-d H:i:s');
+        // $note->save();
+
+        // soft delete (property SoftDeletes in model)
+        $note->delete();
+
+        // hard delete (property SoftDeletes in model)
+        // $note->forceDelete();
 
         // redirect to home
         return redirect()->route('home');
